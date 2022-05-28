@@ -1,12 +1,14 @@
 version: '3'
 services:
   influxdb:
+    restart: always
     image: influxdb:2.2.0
     ports: 
     - 8086:8086
     env_file:
       - influx.env
   mosquitto:
+    restart: always
     image: eclipse-mosquitto:2.0.14
     ports:
       - 1883:1883
