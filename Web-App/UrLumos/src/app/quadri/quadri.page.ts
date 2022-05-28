@@ -23,12 +23,14 @@ export class QuadriPage implements OnInit {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  sendmsg(): void {
+  async sendmsg() {
     const message = "{'Address':6,'R':44,'G':33,'B':84}"
     console.log(message)
     this._mqttService.unsafePublish(this.topicname, message, { qos: 0, retain: false })
      //30000ms = 30s
-    setTimeout(this.LEDShutDown, 3000);
+    
+     await this.sleep(5000)
+
     const message1 = "{'Address':6,'R':0,'G':0,'B':0}"
     this._mqttService.unsafePublish(this.topicname, "{'Address':6,'R':0,'G':0,'B':0}", { qos: 0, retain: false })
   }
@@ -38,4 +40,8 @@ export class QuadriPage implements OnInit {
     const message = "{'Address':6,'R':0,'G':0,'B':0}"
     this._mqttService.unsafePublish(this.topicname, message, { qos: 0, retain: false })
   }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+ }
 }
