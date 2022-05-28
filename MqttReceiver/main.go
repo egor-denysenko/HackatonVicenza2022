@@ -50,7 +50,7 @@ func createInfluxClient() {
 }
 
 func main() {
-	influxToken = os.Args[1]
+	influxToken = os.Getenv("INFLUX_TOKEN")
 
 	createInfluxClient()
 	var broker = "192.168.15.90"
