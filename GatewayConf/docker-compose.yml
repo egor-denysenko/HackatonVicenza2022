@@ -13,4 +13,13 @@ services:
       - 9001:9001
     volumes:
       - $PWD/mosquitto.conf:/mosquitto/config/mosquitto.conf
-    
+  opendata:
+    restart: always
+    build: ../opendata/
+    environment:
+      INFLUX_TOKEN: token
+  gomqtt:
+    restart: always
+    build: ../MqttReceiver/
+    environment:
+      INFLUX_TOKEN: token
