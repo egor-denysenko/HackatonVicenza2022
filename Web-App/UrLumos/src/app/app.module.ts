@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: '192.168.15.146',
+  hostname: '192.168.15.90',
   port: 9001,
 }
 

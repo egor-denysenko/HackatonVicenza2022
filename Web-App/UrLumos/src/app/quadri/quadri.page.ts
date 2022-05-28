@@ -10,22 +10,32 @@ export class QuadriPage implements OnInit {
   private subscription: Subscription;
   topicname: string;
   isConnected: boolean = false;
+  address:number
   @ViewChild('msglog', { static: true }) msglog: ElementRef;
   constructor(private _mqttService: MqttService) { }
 
   ngOnInit(): void {
     this.topicname = "/json"
     this.sendmsg()
+    this.address = 6
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
   sendmsg(): void {
-    // use unsafe publish for non-ssl websockets
-    //this._mqttService.publish(this.topicname, "{'Address':1,'R':0,'G':34,'B':255}", { qos: 0, retain: false })
-    this._mqttService.unsafePublish(this.topicname, "{'Address':2,'R':0,'G':34,'B':255}", { qos: 0, retain: false })
-    //this.msg = ''
+    const message = "{'Address':6,'R':44,'G':33,'B':84}"
+    console.log(message)
+    this._mqttService.unsafePublish(this.topicname, message, { qos: 0, retain: false })
+     //30000ms = 30s
+    setTimeout(this.LEDShutDown, 3000);
+    const message1 = "{'Address':6,'R':0,'G':0,'B':0}"
+    this._mqttService.unsafePublish(this.topicname, "{'Address':6,'R':0,'G':0,'B':0}", { qos: 0, retain: false })
   }
 
+  LEDShutDown(): void{
+    console.log("cerco spegnere")
+    const message = "{'Address':6,'R':0,'G':0,'B':0}"
+    this._mqttService.unsafePublish(this.topicname, message, { qos: 0, retain: false })
+  }
 }
