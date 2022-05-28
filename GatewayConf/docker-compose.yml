@@ -1,18 +1,20 @@
 version: '3'
 services:
-  influxdb:
-    image: influxdb:2.2.0
-    ports: 
-    - 8086:8086
-    env_file:
-      - influx.env
-  mosquitto:
-    image: eclipse-mosquitto:2.0.14
-    ports:
-      - 1883:1883
-      - 9001:9001
-    volumes:
-      - $PWD/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  # influxdb:
+  #   image: influxdb:2.2.0
+  #   restart: always
+  #   ports: 
+  #   - 8086:8086
+  #   env_file:
+  #     - influx.env
+  # mosquitto:
+  #   image: eclipse-mosquitto:2.0.14
+  #   restart: always
+  #   ports:
+  #     - 1883:1883
+  #     - 9001:9001
+  #   volumes:
+  #     - $PWD/mosquitto.conf:/mosquitto/config/mosquitto.conf
   opendata:
     restart: always
     build: ../opendata/
@@ -23,3 +25,6 @@ services:
     build: ../MqttReceiver/
     environment:
       INFLUX_TOKEN: token
+  webapp:
+    restart: always
+    build: ../Web-App/UrLumos/
