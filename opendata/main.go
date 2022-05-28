@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/gorilla/mux"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -30,9 +29,6 @@ func execQuery(query string) []map[string]interface{} {
 		return nil
 	}
 	for result.Next() {
-		if result.TableChanged() {
-			fmt.Printf("table: %s\n", result.TableMetadata().String())
-		}
 		response = append(response, result.Record().Values())
 	}
 
@@ -41,7 +37,7 @@ func execQuery(query string) []map[string]interface{} {
 		return nil
 	}
 	client.Close()
-	return nil
+	return response
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
