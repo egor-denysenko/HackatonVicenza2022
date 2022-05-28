@@ -46,14 +46,14 @@ func connectLostHandler(client mqtt.Client, err error) {
 }
 
 func createInfluxClient() {
-	influxClient = influxdb2.NewClient("http://192.168.15.146:8086", influxToken)
+	influxClient = influxdb2.NewClient("http://192.168.15.90:8086", influxToken)
 }
 
 func main() {
 	influxToken = os.Args[1]
 
 	createInfluxClient()
-	var broker = "192.168.15.146"
+	var broker = "192.168.15.90"
 	var port = 1883
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", broker, port))
